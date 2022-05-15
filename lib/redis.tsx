@@ -34,3 +34,13 @@ export async function createSong(data) {
 
     return id;
 };
+
+export async function fetchSong(q) {
+    await connect();
+
+    const repository = client.fetchRepository(schema);
+
+    const song =  repository.fetch(1);
+
+    return song;
+}
