@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../firebase/clientApp";
 
@@ -11,6 +11,7 @@ const uiConfig = {
 };
 
 function SignInScreen() {
+    
   return (
     <div
       style={{
