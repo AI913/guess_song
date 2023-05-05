@@ -19,6 +19,7 @@ export default function Home() {
   console.log("Loading:", loading, "|", "Current user:", user);
 
   const [randomLyrics1, setRandomLyrics1] = useState(null);
+  const [randomLyrics2, setRandomLyrics2] = useState(null);
 
   useEffect(() => {
     const collectionRef = db.collection("songs");
@@ -35,6 +36,7 @@ export default function Home() {
           console.log(doc.data());
           const data = doc.data();
           setRandomLyrics1(data.lyrics1);
+          setRandomLyrics2(data.lyrics2);
           console.log(randomId);
         });
       });
@@ -43,9 +45,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <h1>{randomLyrics1}</h1>
-      <form>
-        <input name="title" type="text" />
-      </form>
+      {randomLyrics2 && <Wordle solution={randomLyrics2} />}
     </div>
   );
 }
