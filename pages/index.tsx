@@ -28,7 +28,7 @@ export default function Home() {
 
     collectionRef
     .orderBy('__name__')
-    .endBefore(randomId)
+    .startAt(randomId)
     .limit(1)
     .get()
     .then(snapshot => {
