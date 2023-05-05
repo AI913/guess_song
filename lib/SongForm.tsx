@@ -69,7 +69,7 @@ export default function SongForm() {
   console.log("Loading:", loading, "|", "Current user:", user);
 
   return (
-    <form onSubmit={addSong}>
+    <form noValidate onSubmit={addSong}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12"></div>
 
@@ -84,7 +84,8 @@ export default function SongForm() {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                className="block rounded-md flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
+                invalid:ring-2 invalid:ring-red-500"
                 placeholder="擱淺"
                 required
               />
@@ -104,7 +105,8 @@ export default function SongForm() {
                 type="text"
                 value={lyrics}
                 onChange={(e) => setLyrics(e.target.value)}
-                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                className="block rounded-md flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6
+                invalid:ring-2 invalid:ring-red-500"
                 placeholder="我只能永遠讀着對白"
                 required
               />
@@ -115,7 +117,7 @@ export default function SongForm() {
 
         <div className="col-span-full">
           <label className="block text-sm font-medium leading-6 text-gray-900">
-            歌手
+            歌手(可選填)
           </label>
           <div className="mt-2">
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -134,7 +136,7 @@ export default function SongForm() {
 
         <div className="col-span-full">
           <label className="block text-sm font-medium leading-6 text-gray-900">
-            作曲
+            作曲(可選填)
           </label>
           <div className="mt-2">
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -152,7 +154,7 @@ export default function SongForm() {
 
         <div className="col-span-full">
           <label className="block text-sm font-medium leading-6 text-gray-900">
-            作詞
+            作詞(可選填)
           </label>
 
           <div className="mt-2">
@@ -171,7 +173,7 @@ export default function SongForm() {
 
         <div className="col-span-full">
           <label className="block text-sm font-medium leading-6 text-gray-900">
-            編曲
+            編曲(可選填)
           </label>
           <div className="mt-2">
             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
