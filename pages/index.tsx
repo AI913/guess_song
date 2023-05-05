@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { read } from "fs";
+import Wordle from "../lib/Wordle";
 
 export default function Home() {
   const db = firebase.firestore();
