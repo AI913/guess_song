@@ -1,13 +1,14 @@
 import { useState } from "react";
 
 const useWordle = (solution) => {
-  console.log(solution);
   const [turn, setTurn] = useState(0);
   const [currentGuess, setCurrentGuess] = useState("");
-  const [guesses, setGuesses] = useState([...Array(6)]); // each guess is an array
+  const [guesses, setGuesses] = useState([...Array(7)]); // each guess is an array
   const [history, setHistory] = useState([]); // each guess is a string
   const [isCorrect, setIsCorrect] = useState(false);
   const [usedKeys, setUsedKeys] = useState({}); // {a: 'grey', b: 'green', c: 'yellow'} etc
+
+  let isComposing = false;
 
   // format a guess into an array of letter objects
   // e.g. [{key: 'a', color: 'yellow'}]
@@ -80,37 +81,124 @@ const useWordle = (solution) => {
   // handle keyup event & track current guess
   // if user presses enter, add the new guess
   const handleKeyup = ({ key }) => {
-    if (key === "Enter") {
-      // only add guess if turn is less than 5
-      if (turn > 5) {
-        console.log("you used all your guesses!");
-        return;
-      }
-      // do not allow duplicate words
-      if (history.includes(currentGuess)) {
-        console.log("you already tried that word.");
-        return;
-      }
-      // check word is 5 chars
-      if (currentGuess.length !== 5) {
-        console.log("word must be 5 chars.");
-        return;
-      }
-      const formatted = formatGuess();
-      addNewGuess(formatted);
+    const nonCharacterKeys = [
+      "Shift",
+      "Control",
+      "Alt",
+      "Meta",
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight",
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      // ... Add any other non-character keys you want to ignore
+    ];
+
+    if (nonCharacterKeys.includes(key)) {
+      return; // Ignore the key
     }
-    if (key === "Backspace") {
-      setCurrentGuess((prev) => prev.slice(0, -1));
-      return;
-    }
-    if (/^[A-Za-z]$/.test(key)) {
+    const composedText = key;
+    console.log(composedText);
+    if (!isComposing) {
+      if (key === "Enter") {
+        // only add guess if turn is less than 5
+        if (turn > 5) {
+          console.log("you used all your guesses!");
+          return;
+        }
+        // do not allow duplicate words
+        if (history.includes(currentGuess)) {
+          console.log("you already tried that word.");
+          return;
+        }
+        // check word is 5 chars
+        if (currentGuess.length !== 5) {
+          console.log("word must be 5 chars.");
+          return;
+        }
+        const formatted = formatGuess();
+        addNewGuess(formatted);
+      }
+      if (key === "Backspace") {
+        setCurrentGuess((prev) => prev.slice(0, -1));
+        return;
+      }
+      // if (/^[A-Za-z]$/.test(key)) {
       if (currentGuess.length < 5) {
         setCurrentGuess((prev) => prev + key);
       }
     }
+
+    // }
   };
 
-  return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup };
+  const handleCompositionStart = (event) => {
+    isComposing = true;
+    const composedText = event.data;
+    console.log("YOYO");
+    // if (key === "Enter") {
+    //   // only add guess if turn is less than 5
+    //   if (turn > 5) {
+    //     console.log("you used all your guesses!");
+    //     return;
+    //   }
+    //   // do not allow duplicate words
+    //   if (history.includes(currentGuess)) {
+    //     console.log("you already tried that word.");
+    //     return;
+    //   }
+    //   // check word is 5 chars
+    //   if (currentGuess.length !== 5) {
+    //     console.log("word must be 5 chars.");
+    //     return;
+    //   }
+    //   const formatted = formatGuess();
+    //   addNewGuess(formatted);
+    // }
+    // if (key === "Backspace") {
+    //   setCurrentGuess((prev) => prev.slice(0, -1));
+    //   return;
+    // }
+    // // if (/^[A-Za-z]$/.test(key)) {
+    if (currentGuess.length < 5) {
+      setCurrentGuess((prev) => prev + composedText);
+    }
+    // // }
+  };
+
+  const handleCompositionEnd = (event) => {
+    isComposing = false;
+
+    const composedText = event.data;
+    console.log(composedText);
+    console.log("WTF");
+
+    if (currentGuess.length < 5) {
+      setCurrentGuess((prev) => prev + composedText);
+    }
+    // const formatted = formatGuess();
+    // addNewGuess(formatted);
+  };
+
+  return {
+    turn,
+    currentGuess,
+    guesses,
+    isCorrect,
+    usedKeys,
+    handleKeyup,
+    handleCompositionStart,
+    handleCompositionEnd,
+  };
 };
 
 export default useWordle;

@@ -40,7 +40,7 @@ export async function fetchSong(q) {
 
     const repository = client.fetchRepository(schema);
 
-    const song =  repository.fetch(1);
+    const song =  repository.fetch();
 
     return song;
 }

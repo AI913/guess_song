@@ -15,6 +15,8 @@ export default function Row({ guess, currentGuess }) {
 
   if (currentGuess) {
     let letters = currentGuess.split("");
+    console.log(letters);
+    console.log("total");
 
     return (
       <div className="row current">
