@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLyrics } from "../contexts/LyricsContext";
+import { useToast } from "@chakra-ui/react";
 
 const useWordle = (solution) => {
   const [turn, setTurn] = useState(0);
@@ -9,6 +10,7 @@ const useWordle = (solution) => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [usedKeys, setUsedKeys] = useState({}); // {a: 'grey', b: 'green', c: 'yellow'} etc
   const { lyrics1, lyrics2, setLyrics1, setLyrics2 } = useLyrics();
+  const toast = useToast();
 
   let isComposing = false;
 
@@ -125,6 +127,13 @@ const useWordle = (solution) => {
         // check word is 5 chars
         if (currentGuess.length !== lyrics2.length) {
           console.log("word must be 5 chars.");
+          toast({
+            title: "字數不足",
+            description: `請輸入 ${lyrics2.length} 個字的答案`,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
           return;
         }
         const formatted = formatGuess();
