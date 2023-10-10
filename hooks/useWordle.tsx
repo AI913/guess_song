@@ -123,10 +123,10 @@ const useWordle = (solution) => {
           return;
         }
         // check word is 5 chars
-        // if (currentGuess.length !== 5) {
-        //   console.log("word must be 5 chars.");
-        //   return;
-        // }
+        if (currentGuess.length !== lyrics2.length) {
+          console.log("word must be 5 chars.");
+          return;
+        }
         const formatted = formatGuess();
         addNewGuess(formatted);
       }
