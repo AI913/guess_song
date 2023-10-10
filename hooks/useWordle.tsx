@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLyrics } from "../contexts/LyricsContext";
 
 const useWordle = (solution) => {
   const [turn, setTurn] = useState(0);
@@ -7,6 +8,7 @@ const useWordle = (solution) => {
   const [history, setHistory] = useState([]); // each guess is a string
   const [isCorrect, setIsCorrect] = useState(false);
   const [usedKeys, setUsedKeys] = useState({}); // {a: 'grey', b: 'green', c: 'yellow'} etc
+  const { lyrics1, lyrics2, setLyrics1, setLyrics2 } = useLyrics();
 
   let isComposing = false;
 
@@ -121,10 +123,10 @@ const useWordle = (solution) => {
           return;
         }
         // check word is 5 chars
-        if (currentGuess.length !== 5) {
-          console.log("word must be 5 chars.");
-          return;
-        }
+        // if (currentGuess.length !== 5) {
+        //   console.log("word must be 5 chars.");
+        //   return;
+        // }
         const formatted = formatGuess();
         addNewGuess(formatted);
       }
@@ -144,35 +146,7 @@ const useWordle = (solution) => {
   const handleCompositionStart = (event) => {
     isComposing = true;
     const composedText = event.data;
-    console.log("YOYO");
-    // if (key === "Enter") {
-    //   // only add guess if turn is less than 5
-    //   if (turn > 5) {
-    //     console.log("you used all your guesses!");
-    //     return;
-    //   }
-    //   // do not allow duplicate words
-    //   if (history.includes(currentGuess)) {
-    //     console.log("you already tried that word.");
-    //     return;
-    //   }
-    //   // check word is 5 chars
-    //   if (currentGuess.length !== 5) {
-    //     console.log("word must be 5 chars.");
-    //     return;
-    //   }
-    //   const formatted = formatGuess();
-    //   addNewGuess(formatted);
-    // }
-    // if (key === "Backspace") {
-    //   setCurrentGuess((prev) => prev.slice(0, -1));
-    //   return;
-    // }
-    // // if (/^[A-Za-z]$/.test(key)) {
-    if (currentGuess.length < 5) {
-      setCurrentGuess((prev) => prev + composedText);
-    }
-    // // }
+    console.log("start");
   };
 
   const handleCompositionEnd = (event) => {
@@ -180,9 +154,9 @@ const useWordle = (solution) => {
 
     const composedText = event.data;
     console.log(composedText);
-    console.log("WTF");
+    console.log("end");
 
-    if (currentGuess.length < 5) {
+    if (currentGuess.length < lyrics2.length) {
       setCurrentGuess((prev) => prev + composedText);
     }
     // const formatted = formatGuess();
