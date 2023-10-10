@@ -1,12 +1,15 @@
-import Layout from '../lib/Layout'
-import '../styles/globals.css'
+import { LyricsProvider } from "../contexts/LyricsContext";
+import Layout from "../lib/Layout";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
     <Layout>
-      <Component {...pageProps} />
+      <LyricsProvider>
+        <Component {...pageProps} />
+      </LyricsProvider>
     </Layout>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

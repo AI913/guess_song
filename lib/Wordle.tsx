@@ -17,7 +17,6 @@ export default function Wordle({ solution }) {
     handleCompositionStart,
     handleCompositionEnd,
   } = useWordle(solution);
-  // console.log(currentGuess, guesses);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {

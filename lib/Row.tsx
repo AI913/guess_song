@@ -1,6 +1,9 @@
 import React from "react";
+import { useLyrics } from "../contexts/LyricsContext";
 
 export default function Row({ guess, currentGuess }) {
+  const { lyrics1, lyrics2, setLyrics1, setLyrics2 } = useLyrics();
+
   if (guess) {
     return (
       <div className="row past">
@@ -25,7 +28,7 @@ export default function Row({ guess, currentGuess }) {
             {letter}
           </div>
         ))}
-        {[...Array(5 - letters.length)].map((_, i) => (
+        {[...Array(lyrics2.length - letters.length)].map((_, i) => (
           <div key={i}></div>
         ))}
       </div>
@@ -34,11 +37,9 @@ export default function Row({ guess, currentGuess }) {
 
   return (
     <div className="row">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+      {[...Array(lyrics2.length)].map((_, i) => (
+        <div key={i}></div>
+      ))}
     </div>
   );
 }
